@@ -1,0 +1,6 @@
+date,account_id,campaign_id,campaign_name,impressions,clicks,spend_micros,conversions
+2026-05-03,111-222-3333,g-1001,Brand Search US,12400,781,31890000,42
+2026-05-04,111-222-3333,g-1001,Brand Search US,13120,803,32910000,45
+2026-05-04,111-222-3333,g-1002,Nonbrand Trial,8200,346,41750000,18
+2026-05-05,111-222-3333,g-1002,Nonbrand Trial,8750,372,43900000,20
+

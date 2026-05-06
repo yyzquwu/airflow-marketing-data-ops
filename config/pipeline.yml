@@ -1,0 +1,43 @@
+freshness:
+  max_lag_days: 2
+  reference_date: "2026-05-05"
+quality:
+  required_columns:
+    google_ads:
+      - date
+      - account_id
+      - campaign_id
+      - campaign_name
+      - impressions
+      - clicks
+      - spend_micros
+      - conversions
+    meta_ads:
+      - date_start
+      - account_id
+      - campaign_id
+      - campaign_name
+      - impressions
+      - clicks
+      - spend
+      - actions_purchase
+    tiktok_ads:
+      - stat_time_day
+      - advertiser_id
+      - campaign_id
+      - campaign_name
+      - impressions
+      - clicks
+      - spend
+      - conversion
+  non_negative_metrics:
+    - impressions
+    - clicks
+    - spend
+    - spend_micros
+    - conversions
+    - actions_purchase
+    - conversion
+output:
+  unified_campaign_daily: output/unified_campaign_daily.csv
+  incidents_dir: output/incidents

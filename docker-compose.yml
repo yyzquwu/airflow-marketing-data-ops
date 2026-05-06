@@ -1,0 +1,15 @@
+services:
+  airflow:
+    image: apache/airflow:2.9.3-python3.11
+    command: airflow standalone
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
+      PYTHONPATH: /opt/airflow/project
+      MARKETING_DATA_OPS_PROJECT_ROOT: /opt/airflow/project
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/opt/airflow/project
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs

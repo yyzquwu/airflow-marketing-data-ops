@@ -1,0 +1,5 @@
+stat_time_day,advertiser_id,campaign_id,campaign_name,impressions,clicks,spend,conversion
+2026-05-03,tt_445566,t-3001,Teen Drama Launch,164000,3390,760.42,96
+2026-05-04,tt_445566,t-3001,Teen Drama Launch,171500,3525,810.10,104
+2026-05-04,tt_445566,t-3002,Clip Boost Retargeting,142500,2015,515.00,37
+2026-05-05,tt_445566,t-3002,Clip Boost Retargeting,148000,2088,532.80,42

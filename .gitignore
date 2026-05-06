@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.tmp/
+pytest-cache-files-*/
+.venv/
+venv/
+logs/
+output/
+airflow_home/
+.env
