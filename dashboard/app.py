@@ -41,6 +41,18 @@ PLATFORM_COLORS = {
     "Meta Ads": "#0f766e",
     "TikTok Ads": "#db2777",
 }
+SOURCE_MEDIUM = {
+    "Google Ads": "Paid Search",
+    "Meta Ads": "Paid Social",
+    "TikTok Ads": "Paid Social",
+}
+METRIC_ACCENTS = {
+    "Spend": "#2563eb",
+    "Conversions": "#0f766e",
+    "CPA": "#db2777",
+    "CTR": "#f59e0b",
+    "CPC": "#7c3aed",
+}
 
 
 def safe_divide(numerator: float, denominator: float) -> float:
@@ -62,7 +74,17 @@ def prepare_campaign_data(df: pd.DataFrame) -> pd.DataFrame:
         prepared[column] = pd.to_numeric(prepared[column], errors="coerce").fillna(0)
 
     prepared["source_label"] = prepared["source"].map(SOURCE_LABELS).fillna(prepared["source"])
+    prepared["source_medium"] = prepared["source_label"].map(SOURCE_MEDIUM).fillna("Paid Media")
     return prepared.sort_values(["date", "source_label", "campaign_name"]).reset_index(drop=True)
+
+
+def ensure_dashboard_columns(df: pd.DataFrame) -> pd.DataFrame:
+    prepared = df.copy()
+    if "source_label" not in prepared.columns:
+        prepared["source_label"] = prepared["source"].map(SOURCE_LABELS).fillna(prepared["source"])
+    if "source_medium" not in prepared.columns:
+        prepared["source_medium"] = prepared["source_label"].map(SOURCE_MEDIUM).fillna("Paid Media")
+    return prepared
 
 
 @st.cache_data(show_spinner=False)
@@ -85,12 +107,14 @@ def filter_campaign_data(
     end_date: pd.Timestamp,
     sources: list[str],
     campaigns: list[str],
+    source_media: list[str],
 ) -> pd.DataFrame:
     filtered = df[
         (df["date"] >= start_date)
         & (df["date"] <= end_date)
         & (df["source"].isin(sources))
         & (df["campaign_name"].isin(campaigns))
+        & (df["source_medium"].isin(source_media))
     ]
     return filtered.copy()
 
@@ -135,12 +159,25 @@ def campaign_summary(df: pd.DataFrame) -> pd.DataFrame:
     return summary
 
 
-def time_series(df: pd.DataFrame) -> pd.DataFrame:
-    return (
-        df.groupby("date", as_index=False)[METRIC_COLUMNS]
+def time_series(df: pd.DataFrame, grain: str) -> pd.DataFrame:
+    daily = df.copy()
+    if grain == "Week":
+        daily["period"] = daily["date"].dt.to_period("W").dt.start_time
+        label_format = "%b %d"
+    elif grain == "Month":
+        daily["period"] = daily["date"].dt.to_period("M").dt.start_time
+        label_format = "%b %Y"
+    else:
+        daily["period"] = daily["date"]
+        label_format = "%b %d"
+
+    trend = (
+        daily.groupby("period", as_index=False)[METRIC_COLUMNS]
         .sum()
-        .sort_values("date")
+        .sort_values("period")
     )
+    trend["label"] = trend["period"].dt.strftime(label_format)
+    return trend
 
 
 def money(value: float) -> str:
@@ -180,6 +217,11 @@ def inject_css() -> None:
             background: #ffffff;
             border-right: 1px solid var(--line);
         }
+        [data-testid="stSidebar"] hr {
+            border: 0;
+            border-top: 1px solid #e2e8f0;
+            margin: 1.2rem 0;
+        }
         [data-testid="stSidebar"] label,
         [data-testid="stSidebar"] .stMarkdown p {
             color: #334155;
@@ -191,6 +233,13 @@ def inject_css() -> None:
             font-size: 1.2rem;
             line-height: 1.15;
             margin-bottom: 0.15rem;
+        }
+        [data-testid="stSidebar"] h3 {
+            color: #0f172a;
+            font-size: 0.78rem;
+            font-weight: 800;
+            margin: 0.8rem 0 0.25rem;
+            text-transform: uppercase;
         }
         [data-testid="stSidebar"] [data-testid="stCaptionContainer"] {
             color: #64748b;
@@ -228,11 +277,65 @@ def inject_css() -> None:
         }
         .main .block-container {
             max-width: 1360px;
-            padding-top: 1.25rem;
+            padding-top: 0.75rem;
             padding-bottom: 2.5rem;
         }
         h1, h2, h3, p, div, span {
             letter-spacing: 0;
+        }
+        .topbar {
+            align-items: center;
+            background: linear-gradient(135deg, #061526 0%, #09233f 100%);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 12px 30px rgba(7, 22, 35, 0.13);
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            margin: -0.75rem -0.25rem 1rem;
+            min-height: 64px;
+            padding: 13px 22px;
+        }
+        .brand-lockup {
+            align-items: center;
+            display: flex;
+            gap: 14px;
+        }
+        .brand-mark {
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.36);
+            border-radius: 999px;
+            display: flex;
+            font-size: 1.15rem;
+            font-weight: 850;
+            height: 38px;
+            justify-content: center;
+            width: 38px;
+        }
+        .brand-title {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+        .brand-subtitle {
+            color: #cbd5e1;
+            font-size: 0.78rem;
+            margin-top: 3px;
+        }
+        .topbar-meta {
+            align-items: center;
+            color: #e2e8f0;
+            display: flex;
+            flex-wrap: wrap;
+            font-size: 0.78rem;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .topbar-pill {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.18);
+            border-radius: 8px;
+            padding: 8px 10px;
         }
         .masthead {
             background: linear-gradient(135deg, #071623 0%, #0b2440 58%, #12325a 100%);
@@ -282,6 +385,19 @@ def inject_css() -> None:
             max-width: 360px;
             padding: 12px 14px;
         }
+        .status-card {
+            background: #f8fafc;
+            border: 1px solid #d8e1ec;
+            border-radius: 8px;
+            color: #334155;
+            font-size: 0.8rem;
+            line-height: 1.35;
+            padding: 10px 11px;
+        }
+        .status-ok {
+            color: #0f766e;
+            font-weight: 850;
+        }
         .metric-card {
             background: #ffffff;
             border: 1px solid var(--line);
@@ -303,6 +419,19 @@ def inject_css() -> None:
             display: inline-block;
             height: 9px;
             width: 9px;
+        }
+        .metric-icon {
+            align-items: center;
+            background: color-mix(in srgb, var(--accent), white 84%);
+            border-radius: 8px;
+            color: var(--accent);
+            display: flex;
+            font-size: 1.12rem;
+            font-weight: 850;
+            height: 34px;
+            justify-content: center;
+            margin-bottom: 12px;
+            width: 34px;
         }
         .metric-label {
             color: #475569;
@@ -327,6 +456,36 @@ def inject_css() -> None:
             font-size: 1.02rem;
             font-weight: 760;
             margin: 16px 0 10px;
+        }
+        .section-row {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 16px 0 10px;
+        }
+        .section-row .section-title {
+            margin: 0;
+        }
+        .mode-tabs {
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #d8e1ec;
+            border-radius: 8px;
+            display: flex;
+            gap: 4px;
+            padding: 4px;
+        }
+        .mode-tab {
+            border-radius: 6px;
+            color: #475569;
+            font-size: 0.78rem;
+            font-weight: 750;
+            padding: 6px 10px;
+        }
+        .mode-tab-active {
+            background: #2563eb;
+            color: #ffffff;
         }
         .insight-card {
             background: #ffffff;
@@ -362,11 +521,64 @@ def inject_css() -> None:
             box-shadow: 0 14px 30px rgba(15, 23, 42, 0.055);
             padding: 8px 8px 4px;
         }
+        .legend-row {
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.045);
+            font-size: 0.82rem;
+            line-height: 1.55;
+            margin-top: -0.5rem;
+            padding: 12px 14px;
+        }
+        .legend-item {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 4px 0;
+        }
+        .legend-name {
+            align-items: center;
+            color: #334155;
+            display: flex;
+            gap: 8px;
+            min-width: 0;
+        }
+        .legend-swatch {
+            border-radius: 3px;
+            display: inline-block;
+            height: 10px;
+            width: 10px;
+        }
+        .legend-value {
+            color: #0f172a;
+            font-weight: 720;
+            white-space: nowrap;
+        }
         div[data-testid="stDataFrame"] {
             border: 1px solid var(--line);
             border-radius: 8px;
             box-shadow: 0 14px 30px rgba(15, 23, 42, 0.045);
             overflow: hidden;
+        }
+        .table-footer {
+            align-items: center;
+            color: #64748b;
+            display: flex;
+            font-size: 0.78rem;
+            justify-content: space-between;
+            margin: 8px 2px 0;
+        }
+        .dictionary {
+            background: #f8fafc;
+            border: 1px solid #d8e1ec;
+            border-radius: 8px;
+            color: #334155;
+            font-size: 0.78rem;
+            line-height: 1.45;
+            margin-top: 12px;
+            padding: 11px;
         }
         @media (max-width: 900px) {
             .masthead {
@@ -387,10 +599,32 @@ def inject_css() -> None:
     )
 
 
-def render_metric_card(label: str, value: str, note: str, accent: str) -> None:
+def render_topbar(source_note: str, max_date: pd.Timestamp) -> None:
+    st.markdown(
+        f"""
+        <div class="topbar">
+            <div class="brand-lockup">
+                <div class="brand-mark">M</div>
+                <div>
+                    <div class="brand-title">Marketing Data Ops</div>
+                    <div class="brand-subtitle">Unified Paid Media Analytics</div>
+                </div>
+            </div>
+            <div class="topbar-meta">
+                <div class="topbar-pill"><strong>Source:</strong> {escape(source_note)}</div>
+                <div class="topbar-pill"><strong>Data as of:</strong> {escape(max_date.strftime("%b %d, %Y"))}</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_metric_card(label: str, value: str, note: str, accent: str, icon: str) -> None:
     st.markdown(
         f"""
         <div class="metric-card" style="--accent: {accent};">
+            <div class="metric-icon">{escape(icon)}</div>
             <div class="metric-head">
                 <span class="metric-swatch"></span>
                 <div class="metric-label">{escape(label)}</div>
@@ -432,13 +666,12 @@ def style_figure(fig: go.Figure, height: int = 360) -> go.Figure:
     return fig
 
 
-def render_trend_chart(df: pd.DataFrame) -> None:
-    trend = time_series(df)
-    trend["date_label"] = trend["date"].dt.strftime("%b %d")
+def render_trend_chart(df: pd.DataFrame, grain: str) -> None:
+    trend = time_series(df, grain)
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(
         go.Scatter(
-            x=trend["date_label"],
+            x=trend["label"],
             y=trend["spend"],
             name="Spend",
             mode="lines+markers",
@@ -449,7 +682,7 @@ def render_trend_chart(df: pd.DataFrame) -> None:
     )
     fig.add_trace(
         go.Bar(
-            x=trend["date_label"],
+            x=trend["label"],
             y=trend["conversions"],
             name="Conversions",
             marker_color="#0f766e",
@@ -466,18 +699,36 @@ def render_trend_chart(df: pd.DataFrame) -> None:
 
 def render_platform_chart(df: pd.DataFrame) -> None:
     summary = platform_summary(df)
-    fig = px.bar(
+    fig = px.pie(
         summary,
-        x="source_label",
-        y="spend",
+        names="source_label",
+        values="spend",
         color="source_label",
         color_discrete_map=PLATFORM_COLORS,
-        text=summary["spend"].map(money),
+        hole=0.58,
         title="Spend by platform",
-        labels={"source_label": "", "spend": "Spend"},
     )
-    fig.update_traces(textposition="outside", marker_line_width=0)
-    st.plotly_chart(style_figure(fig, 345), width="stretch")
+    fig.update_traces(textposition="inside", textinfo="percent", marker_line=dict(color="#ffffff", width=2))
+    fig.update_layout(showlegend=False)
+    st.plotly_chart(style_figure(fig, 300), width="stretch")
+    total_spend = summary["spend"].sum()
+    rows = []
+    for row in summary.itertuples(index=False):
+        color = PLATFORM_COLORS.get(row.source_label, "#64748b")
+        share = safe_divide(float(row.spend), float(total_spend))
+        rows.append(
+            f'<div class="legend-item">'
+            f'<div class="legend-name"><span class="legend-swatch" style="background:{color};"></span>{escape(row.source_label)}</div>'
+            f'<div class="legend-value">{money(float(row.spend))} ({percent(share)})</div>'
+            f'</div>'
+        )
+    rows.append(
+        f'<div class="legend-item" style="border-top:1px solid #e2e8f0;margin-top:6px;padding-top:8px;">'
+        f'<div class="legend-name"><strong>Total</strong></div>'
+        f'<div class="legend-value">{money(float(total_spend))}</div>'
+        f'</div>'
+    )
+    st.markdown(f'<div class="legend-row">{"".join(rows)}</div>', unsafe_allow_html=True)
 
 
 def render_efficiency_chart(df: pd.DataFrame) -> None:
@@ -526,6 +777,7 @@ def render_takeaways(df: pd.DataFrame) -> None:
 
 def render_campaign_table(df: pd.DataFrame) -> None:
     leaderboard = campaign_summary(df).copy()
+    leaderboard.insert(0, "rank", range(1, len(leaderboard) + 1))
     leaderboard["ctr"] = leaderboard["ctr"].map(percent)
     leaderboard["spend"] = leaderboard["spend"].map(money)
     leaderboard["cpc"] = leaderboard["cpc"].map(money)
@@ -535,6 +787,7 @@ def render_campaign_table(df: pd.DataFrame) -> None:
     leaderboard["conversions"] = leaderboard["conversions"].map(number)
     leaderboard = leaderboard[
         [
+            "rank",
             "campaign_name",
             "source_label",
             "spend",
@@ -547,6 +800,7 @@ def render_campaign_table(df: pd.DataFrame) -> None:
         ]
     ]
     leaderboard.columns = [
+        "Rank",
         "Campaign",
         "Platform",
         "Spend",
@@ -558,6 +812,15 @@ def render_campaign_table(df: pd.DataFrame) -> None:
         "CPA",
     ]
     st.dataframe(leaderboard, width="stretch", hide_index=True, height=260)
+    st.markdown(
+        f"""
+        <div class="table-footer">
+            <span>Showing {len(leaderboard)} of {df["campaign_name"].nunique()} campaigns</span>
+            <span>Rows per page: {len(leaderboard)}</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def main() -> None:
@@ -573,6 +836,7 @@ def main() -> None:
 
     with st.sidebar:
         st.title("Campaign Console")
+        st.markdown("### Data")
         st.caption("Default CSV is generated from the raw platform extracts in this repo.")
         uploaded = st.file_uploader("Upload unified campaign CSV", type=["csv"])
 
@@ -588,14 +852,27 @@ def main() -> None:
         source_note = f"Default file: {source_path}"
         if generated_default:
             source_note += " (generated on load)"
+    df = ensure_dashboard_columns(df)
 
     min_date = df["date"].min().date()
     max_date = df["date"].max().date()
     label_to_source = dict(zip(df["source_label"], df["source"]))
     platform_labels = sorted(label_to_source)
+    source_media = sorted(df["source_medium"].unique())
     campaign_names = sorted(df["campaign_name"].unique())
 
     with st.sidebar:
+        st.markdown(
+            f"""
+            <div class="status-card">
+                <span class="status-ok">Validated</span><br>
+                {len(df):,} rows loaded from the unified campaign table.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.markdown("---")
+        st.markdown("### Filters")
         selected_dates = st.date_input(
             "Date range",
             value=(min_date, max_date),
@@ -612,6 +889,18 @@ def main() -> None:
             options=campaign_names,
             default=campaign_names,
         )
+        selected_source_media = st.selectbox(
+            "Source / Medium",
+            options=["All"] + source_media,
+            index=0,
+        )
+        trend_mode = st.radio(
+            "Trend grain",
+            options=["Day", "Week", "Month"],
+            index=0,
+            horizontal=True,
+        )
+        include_test_campaigns = st.checkbox("Include test campaigns", value=False)
 
     if isinstance(selected_dates, tuple) and len(selected_dates) == 2:
         start_date, end_date = selected_dates
@@ -619,38 +908,39 @@ def main() -> None:
         start_date = end_date = selected_dates
 
     selected_sources = [label_to_source[label] for label in selected_platforms]
+    selected_media = source_media if selected_source_media == "All" else [selected_source_media]
     filtered = filter_campaign_data(
         df=df,
         start_date=pd.Timestamp(start_date),
         end_date=pd.Timestamp(end_date),
         sources=selected_sources,
         campaigns=selected_campaigns,
+        source_media=selected_media,
     )
+    if not include_test_campaigns:
+        filtered = filtered[~filtered["campaign_name"].str.contains("test", case=False, na=False)].copy()
 
     with st.sidebar:
+        st.markdown("---")
         st.download_button(
             "Download filtered CSV",
-            data=filtered.drop(columns=["source_label"]).to_csv(index=False),
+            data=filtered.drop(columns=["source_label", "source_medium"]).to_csv(index=False),
             file_name="filtered_campaign_daily.csv",
             mime="text/csv",
             disabled=filtered.empty,
         )
-
-    st.markdown(
-        f"""
-        <div class="masthead">
-            <div>
-                <h1 class="masthead-title">Marketing Data Ops Dashboard</h1>
-                <p class="masthead-copy">
-                    A recruiter-friendly view of the Airflow pipeline output: unified campaign
-                    performance, quality-ready CSV lineage, and analyst takeaways across paid media sources.
-                </p>
+        st.markdown(
+            """
+            <div class="dictionary">
+                <strong>Data dictionary</strong><br>
+                Spend, impressions, clicks, conversions, CTR, CPC, and CPA are normalized across Google Ads,
+                Meta Ads, and TikTok Ads at the daily campaign grain.
             </div>
-            <div class="lineage-chip">{escape(source_note)}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+            """,
+            unsafe_allow_html=True,
+        )
+
+    render_topbar(source_note, pd.Timestamp(max_date))
 
     if filtered.empty:
         st.warning("No rows match the selected filters.")
@@ -662,18 +952,30 @@ def main() -> None:
 
     metric_cols = st.columns(5)
     with metric_cols[0]:
-        render_metric_card("Spend", money(totals["spend"]), f"{date_count} reporting days", "#2563eb")
+        render_metric_card("Spend", money(totals["spend"]), f"{date_count} reporting days", "#2563eb", "$")
     with metric_cols[1]:
-        render_metric_card("Conversions", number(totals["conversions"]), f"{campaign_count} active campaigns", "#0f766e")
+        render_metric_card("Conversions", number(totals["conversions"]), f"{campaign_count} active campaigns", "#0f766e", "+")
     with metric_cols[2]:
-        render_metric_card("CPA", money(totals["cpa"]), "Spend divided by conversions", "#db2777")
+        render_metric_card("CPA", money(totals["cpa"]), "Spend divided by conversions", "#db2777", "@")
     with metric_cols[3]:
-        render_metric_card("CTR", percent(totals["ctr"]), f"{number(totals['clicks'])} total clicks", "#f59e0b")
+        render_metric_card("CTR", percent(totals["ctr"]), f"{number(totals['clicks'])} total clicks", "#f59e0b", "%")
     with metric_cols[4]:
-        render_metric_card("CPC", money(totals["cpc"]), f"{number(totals['impressions'])} impressions", "#7c3aed")
+        render_metric_card("CPC", money(totals["cpc"]), f"{number(totals['impressions'])} impressions", "#7c3aed", ">")
 
-    st.markdown('<div class="section-title">Performance Trend</div>', unsafe_allow_html=True)
-    render_trend_chart(filtered)
+    active_tabs = "".join(
+        f'<span class="mode-tab {"mode-tab-active" if option == trend_mode else ""}">{option}</span>'
+        for option in ["Day", "Week", "Month"]
+    )
+    st.markdown(
+        f"""
+        <div class="section-row">
+            <div class="section-title">Performance Trend</div>
+            <div class="mode-tabs">{active_tabs}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    render_trend_chart(filtered, str(trend_mode))
 
     chart_cols = st.columns(2)
     with chart_cols[0]:
