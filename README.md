@@ -20,6 +20,7 @@ airflow-marketing-data-ops/
   dags/marketing_campaign_daily.py        # Airflow DAG
   marketing_data_ops/                     # Reusable pipeline package
   data/raw/                               # Sample paid media source extracts
+  dashboard/app.py                        # Streamlit dashboard for the unified CSV
   config/pipeline.yml                     # Freshness, quality, and output settings
   scripts/run_pipeline.py                 # Local runner without Airflow
   tests/test_pipeline.py                  # Unit/integration tests
@@ -57,6 +58,14 @@ Run the pipeline locally:
 ```bash
 python scripts/run_pipeline.py
 ```
+
+Open the dashboard:
+
+```bash
+streamlit run dashboard/app.py
+```
+
+The dashboard reads `output/unified_campaign_daily.csv`. If that file is missing, it regenerates it from the included source extracts under `data/raw/`. You can also upload another CSV with the same unified schema from the sidebar.
 
 Run tests:
 
