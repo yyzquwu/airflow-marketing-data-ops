@@ -26,6 +26,13 @@ def normalize_google_ads(df: pd.DataFrame) -> pd.DataFrame:
     return normalized
 
 
+def normalize_spend_micros_source(df: pd.DataFrame, source: str) -> pd.DataFrame:
+    normalized = df.rename(columns={"spend_micros": "spend"}).copy()
+    normalized["source"] = source
+    normalized["spend"] = pd.to_numeric(normalized["spend"], errors="coerce") / 1_000_000
+    return normalized
+
+
 def normalize_meta_ads(df: pd.DataFrame) -> pd.DataFrame:
     normalized = df.rename(
         columns={
@@ -49,11 +56,20 @@ def normalize_tiktok_ads(df: pd.DataFrame) -> pd.DataFrame:
     return normalized
 
 
+def normalize_standard_source(df: pd.DataFrame, source: str) -> pd.DataFrame:
+    normalized = df.copy()
+    normalized["source"] = source
+    return normalized
+
+
 def build_unified_campaign_daily(source_frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
     frames = [
         normalize_google_ads(source_frames["google_ads"]),
         normalize_meta_ads(source_frames["meta_ads"]),
         normalize_tiktok_ads(source_frames["tiktok_ads"]),
+        normalize_spend_micros_source(source_frames["youtube_ads"], "youtube_ads"),
+        normalize_standard_source(source_frames["microsoft_ads"], "microsoft_ads"),
+        normalize_standard_source(source_frames["other_ads"], "other_ads"),
     ]
     unified = pd.concat(frames, ignore_index=True)
 

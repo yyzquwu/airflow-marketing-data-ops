@@ -9,6 +9,9 @@ SOURCE_FILES = {
     "google_ads": Path("data/raw/google_ads/campaign_daily.csv"),
     "meta_ads": Path("data/raw/meta_ads/campaign_daily.csv"),
     "tiktok_ads": Path("data/raw/tiktok_ads/campaign_daily.csv"),
+    "youtube_ads": Path("data/raw/youtube_ads/campaign_daily.csv"),
+    "microsoft_ads": Path("data/raw/microsoft_ads/campaign_daily.csv"),
+    "other_ads": Path("data/raw/other_ads/campaign_daily.csv"),
 }
 
 

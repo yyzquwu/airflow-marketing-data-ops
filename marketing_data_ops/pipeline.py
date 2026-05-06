@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 
 from marketing_data_ops.config import PipelineConfig, load_config
-from marketing_data_ops.io import read_source, write_campaign_daily
+from marketing_data_ops.io import SOURCE_FILES, read_source, write_campaign_daily
 from marketing_data_ops.transform import build_unified_campaign_daily
 from marketing_data_ops.validation import validate_source
 
@@ -15,6 +15,9 @@ SOURCE_DATE_COLUMNS = {
     "google_ads": "date",
     "meta_ads": "date_start",
     "tiktok_ads": "stat_time_day",
+    "youtube_ads": "date",
+    "microsoft_ads": "date",
+    "other_ads": "date",
 }
 
 
@@ -23,11 +26,7 @@ def project_root_from_file(current_file: str | Path) -> Path:
 
 
 def load_raw_sources(project_root: Path) -> dict[str, pd.DataFrame]:
-    return {
-        "google_ads": read_source(project_root, "google_ads"),
-        "meta_ads": read_source(project_root, "meta_ads"),
-        "tiktok_ads": read_source(project_root, "tiktok_ads"),
-    }
+    return {source: read_source(project_root, source) for source in SOURCE_FILES}
 
 
 def validate_sources(source_frames: dict[str, pd.DataFrame], config: PipelineConfig) -> None:

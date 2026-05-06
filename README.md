@@ -4,12 +4,12 @@ A GitHub-ready Airflow demo for a marketing data operations workflow:
 
 1. Ingest raw paid media CSV extracts.
 2. Validate schema, non-negative metrics, and freshness.
-3. Transform Google Ads, Meta Ads, and TikTok Ads extracts into a unified daily campaign table.
+3. Transform Google Ads, Meta Ads, TikTok Ads, YouTube, Microsoft Ads, and other paid media extracts into a unified daily campaign table.
 4. Write a Markdown incident report when a task fails.
 
-The project uses only local files and small documented sample extracts in `data/raw/`.
+The project uses only local files and documented sample extracts in `data/raw/`.
 
-The sample extracts are modeled after common paid media schemas and public campaign-performance datasets, including Google's public analytics sample and public Kaggle-style ad performance datasets. Real Meta, Google Ads, and TikTok exports normally require account credentials, so this project keeps the operational workflow runnable offline.
+The sample extracts are modeled after common paid media schemas and public campaign-performance datasets, including Google's public analytics sample and public Kaggle-style ad performance datasets. Real platform exports normally require account credentials, so this project keeps the operational workflow runnable offline with a deterministic 31-day portfolio dataset: 3,007 raw rows, 97 campaigns, and 6 paid media sources.
 
 The repo also includes `data/public/public_facebook_ads_sample.csv`, a 150-row normalized public Facebook ads conversion sample for reviewers who want to inspect a real campaign dataset alongside the runnable local extracts.
 
@@ -22,6 +22,7 @@ airflow-marketing-data-ops/
   data/raw/                               # Sample paid media source extracts
   dashboard/app.py                        # Streamlit dashboard for the unified CSV
   config/pipeline.yml                     # Freshness, quality, and output settings
+  scripts/generate_sample_data.py         # Deterministic sample-data generator
   scripts/run_pipeline.py                 # Local runner without Airflow
   tests/test_pipeline.py                  # Unit/integration tests
   docker-compose.yml                      # Lightweight Airflow standalone option
@@ -41,7 +42,7 @@ The output table is written to `output/unified_campaign_daily.csv`.
 | `impressions`, `clicks`, `spend`, `conversions` | Daily delivery and conversion metrics. |
 | `ctr`, `cpc`, `cpa` | Derived performance metrics. |
 
-Google Ads sample spend is stored as `spend_micros` and normalized to currency units. Meta Ads sample purchases are stored as `actions_purchase` and normalized to `conversions`. TikTok sample dates use `stat_time_day` and are normalized to the same daily reporting grain.
+Google Ads and YouTube sample spend is stored as `spend_micros` and normalized to currency units. Meta Ads sample purchases are stored as `actions_purchase` and normalized to `conversions`. TikTok sample dates use `stat_time_day` and are normalized to the same daily reporting grain.
 
 ## Quick Start
 
@@ -57,6 +58,12 @@ Run the pipeline locally:
 
 ```bash
 python scripts/run_pipeline.py
+```
+
+Regenerate the included portfolio-scale raw extracts:
+
+```bash
+python scripts/generate_sample_data.py
 ```
 
 Open the dashboard:
@@ -90,7 +97,7 @@ The DAG reads local files from `data/raw/` and writes the unified table to `outp
 To run a non-interactive DAG test:
 
 ```bash
-docker compose run --rm airflow bash -c "airflow db migrate && airflow dags test marketing_campaign_daily 2026-05-05"
+docker compose run --rm airflow bash -c "airflow db migrate && airflow dags test marketing_campaign_daily 2025-05-18"
 ```
 
 ## Validation Rules

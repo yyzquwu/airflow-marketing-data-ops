@@ -1,6 +1,6 @@
 freshness:
   max_lag_days: 2
-  reference_date: "2026-05-05"
+  reference_date: "2025-05-18"
 quality:
   required_columns:
     google_ads:
@@ -30,6 +30,33 @@ quality:
       - clicks
       - spend
       - conversion
+    youtube_ads:
+      - date
+      - account_id
+      - campaign_id
+      - campaign_name
+      - impressions
+      - clicks
+      - spend_micros
+      - conversions
+    microsoft_ads:
+      - date
+      - account_id
+      - campaign_id
+      - campaign_name
+      - impressions
+      - clicks
+      - spend
+      - conversions
+    other_ads:
+      - date
+      - account_id
+      - campaign_id
+      - campaign_name
+      - impressions
+      - clicks
+      - spend
+      - conversions
   non_negative_metrics:
     - impressions
     - clicks

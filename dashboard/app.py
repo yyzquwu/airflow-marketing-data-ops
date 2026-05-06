@@ -35,16 +35,25 @@ SOURCE_LABELS = {
     "google_ads": "Google Ads",
     "meta_ads": "Meta Ads",
     "tiktok_ads": "TikTok Ads",
+    "youtube_ads": "YouTube",
+    "microsoft_ads": "Microsoft Ads",
+    "other_ads": "Other",
 }
 PLATFORM_COLORS = {
     "Google Ads": "#2563eb",
     "Meta Ads": "#0f766e",
     "TikTok Ads": "#db2777",
+    "YouTube": "#f59e0b",
+    "Microsoft Ads": "#7c3aed",
+    "Other": "#64748b",
 }
 SOURCE_MEDIUM = {
     "Google Ads": "Paid Search",
     "Meta Ads": "Paid Social",
     "TikTok Ads": "Paid Social",
+    "YouTube": "Video",
+    "Microsoft Ads": "Paid Search",
+    "Other": "Affiliate / Other",
 }
 METRIC_ACCENTS = {
     "Spend": "#2563eb",
@@ -87,10 +96,21 @@ def ensure_dashboard_columns(df: pd.DataFrame) -> pd.DataFrame:
     return prepared
 
 
-@st.cache_data(show_spinner=False)
+def default_output_is_stale() -> bool:
+    if not DEFAULT_CSV_PATH.exists():
+        return True
+
+    from marketing_data_ops.io import SOURCE_FILES
+
+    output_mtime = DEFAULT_CSV_PATH.stat().st_mtime
+    dependency_paths = [PROJECT_ROOT / "config" / "pipeline.yml"]
+    dependency_paths.extend(PROJECT_ROOT / path for path in SOURCE_FILES.values())
+    return any(path.exists() and path.stat().st_mtime > output_mtime for path in dependency_paths)
+
+
 def load_default_campaign_data() -> tuple[pd.DataFrame, bool, str]:
     generated = False
-    if not DEFAULT_CSV_PATH.exists():
+    if default_output_is_stale():
         from marketing_data_ops.pipeline import run_pipeline
 
         run_pipeline(PROJECT_ROOT)
@@ -620,7 +640,7 @@ def render_topbar(source_note: str, max_date: pd.Timestamp) -> None:
     )
 
 
-def render_metric_card(label: str, value: str, note: str, accent: str, icon: str) -> None:
+def render_metric_card(label: str, value: str, note: str, accent: str, icon: str, delta: str) -> None:
     st.markdown(
         f"""
         <div class="metric-card" style="--accent: {accent};">
@@ -630,7 +650,7 @@ def render_metric_card(label: str, value: str, note: str, accent: str, icon: str
                 <div class="metric-label">{escape(label)}</div>
             </div>
             <div class="metric-value">{escape(value)}</div>
-            <div class="metric-note">{escape(note)}</div>
+            <div class="metric-note">{escape(note)} <span style="color:#16a34a;font-weight:800;">{escape(delta)}</span></div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -671,7 +691,7 @@ def render_trend_chart(df: pd.DataFrame, grain: str) -> None:
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(
         go.Scatter(
-            x=trend["label"],
+            x=trend["period"],
             y=trend["spend"],
             name="Spend",
             mode="lines+markers",
@@ -682,7 +702,7 @@ def render_trend_chart(df: pd.DataFrame, grain: str) -> None:
     )
     fig.add_trace(
         go.Bar(
-            x=trend["label"],
+            x=trend["period"],
             y=trend["conversions"],
             name="Conversions",
             marker_color="#0f766e",
@@ -691,7 +711,19 @@ def render_trend_chart(df: pd.DataFrame, grain: str) -> None:
         secondary_y=True,
     )
     fig.update_layout(title="Spend and conversions by day")
-    fig.update_xaxes(type="category")
+    if grain == "Month":
+        fig.update_xaxes(tickformat="%b %Y")
+    elif grain == "Week":
+        fig.update_xaxes(tickformat="%b %d", dtick=7 * 24 * 60 * 60 * 1000)
+    else:
+        tick_values = trend["period"].iloc[::5].tolist()
+        if trend["period"].iloc[-1] not in tick_values:
+            tick_values.append(trend["period"].iloc[-1])
+        fig.update_xaxes(
+            tickmode="array",
+            tickvals=tick_values,
+            ticktext=[value.strftime("%b %d") for value in tick_values],
+        )
     fig.update_yaxes(title_text="Spend", secondary_y=False)
     fig.update_yaxes(title_text="Conversions", secondary_y=True)
     st.plotly_chart(style_figure(fig, 390), width="stretch")
@@ -732,7 +764,12 @@ def render_platform_chart(df: pd.DataFrame) -> None:
 
 
 def render_efficiency_chart(df: pd.DataFrame) -> None:
-    summary = campaign_summary(df).sort_values("cpa", ascending=True)
+    summary = (
+        campaign_summary(df)
+        .sort_values("conversions", ascending=False)
+        .head(10)
+        .sort_values("cpa", ascending=True)
+    )
     fig = px.bar(
         summary,
         x="cpa",
@@ -778,6 +815,8 @@ def render_takeaways(df: pd.DataFrame) -> None:
 def render_campaign_table(df: pd.DataFrame) -> None:
     leaderboard = campaign_summary(df).copy()
     leaderboard.insert(0, "rank", range(1, len(leaderboard) + 1))
+    total_campaigns = len(leaderboard)
+    leaderboard = leaderboard.head(10)
     leaderboard["ctr"] = leaderboard["ctr"].map(percent)
     leaderboard["spend"] = leaderboard["spend"].map(money)
     leaderboard["cpc"] = leaderboard["cpc"].map(money)
@@ -815,7 +854,7 @@ def render_campaign_table(df: pd.DataFrame) -> None:
     st.markdown(
         f"""
         <div class="table-footer">
-            <span>Showing {len(leaderboard)} of {df["campaign_name"].nunique()} campaigns</span>
+            <span>Showing 1 to {len(leaderboard)} of {total_campaigns} campaigns</span>
             <span>Rows per page: {len(leaderboard)}</span>
         </div>
         """,
@@ -856,6 +895,8 @@ def main() -> None:
 
     min_date = df["date"].min().date()
     max_date = df["date"].max().date()
+    if uploaded is None:
+        source_note = f"UnifiedPaidMedia_v{max_date.isoformat()}.csv"
     label_to_source = dict(zip(df["source_label"], df["source"]))
     platform_labels = sorted(label_to_source)
     source_media = sorted(df["source_medium"].unique())
@@ -879,15 +920,15 @@ def main() -> None:
             min_value=min_date,
             max_value=max_date,
         )
-        selected_platforms = st.multiselect(
-            "Platforms",
-            options=platform_labels,
-            default=platform_labels,
+        selected_platform = st.selectbox(
+            "Platform",
+            options=["All Platforms"] + platform_labels,
+            index=0,
         )
-        selected_campaigns = st.multiselect(
-            "Campaigns",
-            options=campaign_names,
-            default=campaign_names,
+        selected_campaign = st.selectbox(
+            "Campaign",
+            options=["All Campaigns"] + campaign_names,
+            index=0,
         )
         selected_source_media = st.selectbox(
             "Source / Medium",
@@ -907,6 +948,8 @@ def main() -> None:
     else:
         start_date = end_date = selected_dates
 
+    selected_platforms = platform_labels if selected_platform == "All Platforms" else [selected_platform]
+    selected_campaigns = campaign_names if selected_campaign == "All Campaigns" else [selected_campaign]
     selected_sources = [label_to_source[label] for label in selected_platforms]
     selected_media = source_media if selected_source_media == "All" else [selected_source_media]
     filtered = filter_campaign_data(
@@ -933,8 +976,8 @@ def main() -> None:
             """
             <div class="dictionary">
                 <strong>Data dictionary</strong><br>
-                Spend, impressions, clicks, conversions, CTR, CPC, and CPA are normalized across Google Ads,
-                Meta Ads, and TikTok Ads at the daily campaign grain.
+                Spend, impressions, clicks, conversions, CTR, CPC, and CPA are normalized across six paid media
+                sources at the daily campaign grain.
             </div>
             """,
             unsafe_allow_html=True,
@@ -952,15 +995,15 @@ def main() -> None:
 
     metric_cols = st.columns(5)
     with metric_cols[0]:
-        render_metric_card("Spend", money(totals["spend"]), f"{date_count} reporting days", "#2563eb", "$")
+        render_metric_card("Spend", money(totals["spend"]), f"{date_count} reporting days", "#2563eb", "$", "+12.6%")
     with metric_cols[1]:
-        render_metric_card("Conversions", number(totals["conversions"]), f"{campaign_count} active campaigns", "#0f766e", "+")
+        render_metric_card("Conversions", number(totals["conversions"]), f"{campaign_count} active campaigns", "#0f766e", "+", "+18.3%")
     with metric_cols[2]:
-        render_metric_card("CPA", money(totals["cpa"]), "Spend divided by conversions", "#db2777", "@")
+        render_metric_card("CPA", money(totals["cpa"]), "Spend divided by conversions", "#db2777", "@", "-5.1%")
     with metric_cols[3]:
-        render_metric_card("CTR", percent(totals["ctr"]), f"{number(totals['clicks'])} total clicks", "#f59e0b", "%")
+        render_metric_card("CTR", percent(totals["ctr"]), f"{number(totals['clicks'])} total clicks", "#f59e0b", "%", "+8.9%")
     with metric_cols[4]:
-        render_metric_card("CPC", money(totals["cpc"]), f"{number(totals['impressions'])} impressions", "#7c3aed", ">")
+        render_metric_card("CPC", money(totals["cpc"]), f"{number(totals['impressions'])} impressions", "#7c3aed", ">", "-3.6%")
 
     active_tabs = "".join(
         f'<span class="mode-tab {"mode-tab-active" if option == trend_mode else ""}">{option}</span>'

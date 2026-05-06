@@ -1,0 +1,249 @@
+date,account_id,campaign_id,campaign_name,impressions,clicks,spend,conversions
+2025-04-18,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,78990,782,991.59,9
+2025-04-18,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,31010,307,389.06,4
+2025-04-18,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,34545,342,433.82,4
+2025-04-18,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,38081,377,478.58,5
+2025-04-18,ms_334455,ms-0005,Kids and Family Winback South Microsoft,41717,413,523.34,5
+2025-04-18,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,45253,448,568.1,5
+2025-04-18,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,48788,483,612.86,6
+2025-04-18,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,52323,518,657.62,6
+2025-04-19,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,81010,802,998.06,9
+2025-04-19,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,31818,315,391.6,4
+2025-04-19,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,35455,351,436.65,4
+2025-04-19,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,39091,387,481.7,5
+2025-04-19,ms_334455,ms-0005,Kids and Family Winback South Microsoft,42727,423,526.75,5
+2025-04-19,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,46364,459,571.81,5
+2025-04-19,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,50101,496,616.86,6
+2025-04-19,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,53737,532,661.91,6
+2025-04-20,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,83030,822,1004.53,9
+2025-04-20,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,32626,323,394.14,4
+2025-04-20,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,36364,360,439.48,4
+2025-04-20,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,40101,397,484.82,4
+2025-04-20,ms_334455,ms-0005,Kids and Family Winback South Microsoft,43838,434,530.17,5
+2025-04-20,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,47576,471,575.51,5
+2025-04-20,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,51313,508,620.85,6
+2025-04-20,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,55051,545,666.2,6
+2025-04-21,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,75960,752,902.67,8
+2025-04-21,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,29798,295,354.17,3
+2025-04-21,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,33232,329,394.92,4
+2025-04-21,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,36667,363,435.66,4
+2025-04-21,ms_334455,ms-0005,Kids and Family Winback South Microsoft,40101,397,476.41,4
+2025-04-21,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,43535,431,517.16,5
+2025-04-21,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,46970,465,557.9,5
+2025-04-21,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,50404,499,598.65,5
+2025-04-22,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,99596,986,1162.81,10
+2025-04-22,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,39091,387,456.24,4
+2025-04-22,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,43636,432,508.73,5
+2025-04-22,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,48081,476,561.22,5
+2025-04-22,ms_334455,ms-0005,Kids and Family Winback South Microsoft,52626,521,613.71,5
+2025-04-22,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,57071,565,666.19,6
+2025-04-22,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,61616,610,718.68,6
+2025-04-22,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,66061,654,771.17,7
+2025-04-23,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,79697,789,914.22,8
+2025-04-23,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,31313,310,358.7,3
+2025-04-23,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,34848,345,399.97,3
+2025-04-23,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,38485,381,441.24,4
+2025-04-23,ms_334455,ms-0005,Kids and Family Winback South Microsoft,42121,417,482.51,4
+2025-04-23,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,45657,452,523.77,5
+2025-04-23,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,49293,488,565.04,5
+2025-04-23,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,52828,523,606.31,5
+2025-04-24,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,81616,808,919.99,8
+2025-04-24,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,32020,317,360.97,3
+2025-04-24,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,35758,354,402.5,3
+2025-04-24,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,39394,390,444.03,4
+2025-04-24,ms_334455,ms-0005,Kids and Family Winback South Microsoft,43030,426,485.55,4
+2025-04-24,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,46768,463,527.08,5
+2025-04-24,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,50404,499,568.61,5
+2025-04-24,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,54141,536,610.14,5
+2025-04-25,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,82525,817,1036.86,10
+2025-04-25,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,32424,321,406.82,4
+2025-04-25,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,36162,358,453.63,4
+2025-04-25,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,39899,395,500.43,5
+2025-04-25,ms_334455,ms-0005,Kids and Family Winback South Microsoft,43535,431,547.23,5
+2025-04-25,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,47273,468,594.04,6
+2025-04-25,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,51010,505,640.84,6
+2025-04-25,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,54747,542,687.64,7
+2025-04-26,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,84646,838,1043.33,10
+2025-04-26,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,33232,329,409.36,4
+2025-04-26,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,37071,367,456.46,4
+2025-04-26,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,40909,405,503.55,5
+2025-04-26,ms_334455,ms-0005,Kids and Family Winback South Microsoft,44646,442,550.65,5
+2025-04-26,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,48485,480,597.74,6
+2025-04-26,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,52323,518,644.83,6
+2025-04-26,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,56162,556,691.93,6
+2025-04-27,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,86768,859,1049.79,10
+2025-04-27,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,34040,337,411.9,4
+2025-04-27,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,37980,376,459.29,4
+2025-04-27,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,41919,415,506.67,5
+2025-04-27,ms_334455,ms-0005,Kids and Family Winback South Microsoft,45758,453,554.06,5
+2025-04-27,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,49697,492,601.45,6
+2025-04-27,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,53636,531,648.83,6
+2025-04-27,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,57576,570,696.22,6
+2025-04-28,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,79394,786,943.09,9
+2025-04-28,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,31111,308,370.03,3
+2025-04-28,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,34747,344,412.6,4
+2025-04-28,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,38283,379,455.17,4
+2025-04-28,ms_334455,ms-0005,Kids and Family Winback South Microsoft,41919,415,497.74,5
+2025-04-28,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,45455,450,540.31,5
+2025-04-28,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,49091,486,582.88,5
+2025-04-28,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,52626,521,625.45,6
+2025-04-29,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,104040,1030,1214.55,11
+2025-04-29,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,40808,404,476.54,4
+2025-04-29,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,45556,451,531.36,5
+2025-04-29,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,50202,497,586.19,5
+2025-04-29,ms_334455,ms-0005,Kids and Family Winback South Microsoft,54949,544,641.01,6
+2025-04-29,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,59596,590,695.83,6
+2025-04-29,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,64343,637,750.66,7
+2025-04-29,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,68990,683,805.48,7
+2025-04-30,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,83232,824,954.64,8
+2025-04-30,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,32626,323,374.56,3
+2025-04-30,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,36465,361,417.65,4
+2025-04-30,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,40202,398,460.75,4
+2025-04-30,ms_334455,ms-0005,Kids and Family Winback South Microsoft,43939,435,503.84,4
+2025-04-30,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,47677,472,546.93,5
+2025-04-30,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,51414,509,590.02,5
+2025-04-30,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,55253,547,633.11,6
+2025-05-01,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,85253,844,960.41,8
+2025-05-01,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,33434,331,376.83,3
+2025-05-01,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,37273,369,420.18,4
+2025-05-01,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,41111,407,463.53,4
+2025-05-01,ms_334455,ms-0005,Kids and Family Winback South Microsoft,44949,445,506.88,4
+2025-05-01,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,48788,483,550.24,5
+2025-05-01,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,52626,521,593.59,5
+2025-05-01,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,56465,559,636.94,5
+2025-05-02,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,86162,853,1082.13,10
+2025-05-02,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,33838,335,424.59,4
+2025-05-02,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,37677,373,473.43,5
+2025-05-02,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,41616,412,522.28,5
+2025-05-02,ms_334455,ms-0005,Kids and Family Winback South Microsoft,45455,450,571.12,5
+2025-05-02,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,49394,489,619.97,6
+2025-05-02,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,53232,527,668.82,6
+2025-05-02,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,57172,566,717.66,7
+2025-05-03,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,88384,875,1088.6,10
+2025-05-03,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,34646,343,427.12,4
+2025-05-03,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,38687,383,476.26,4
+2025-05-03,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,42626,422,525.4,5
+2025-05-03,ms_334455,ms-0005,Kids and Family Winback South Microsoft,46667,462,574.54,5
+2025-05-03,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,50606,501,623.68,6
+2025-05-03,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,54545,540,672.81,6
+2025-05-03,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,58586,580,721.95,7
+2025-05-04,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,90505,896,1095.06,10
+2025-05-04,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,35556,352,429.66,4
+2025-05-04,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,39596,392,479.09,4
+2025-05-04,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,43737,433,528.52,5
+2025-05-04,ms_334455,ms-0005,Kids and Family Winback South Microsoft,47778,473,577.95,5
+2025-05-04,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,51818,513,627.38,6
+2025-05-04,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,55960,554,676.81,6
+2025-05-04,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,60000,594,726.24,7
+2025-05-05,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,105960,1049,1258.89,11
+2025-05-05,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,41616,412,493.94,4
+2025-05-05,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,46364,459,550.77,5
+2025-05-05,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,51111,506,607.59,6
+2025-05-05,ms_334455,ms-0005,Kids and Family Winback South Microsoft,55960,554,664.42,6
+2025-05-05,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,60707,601,721.24,7
+2025-05-05,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,65455,648,778.07,7
+2025-05-05,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,70303,696,834.89,8
+2025-05-06,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,84747,839,989.28,9
+2025-05-06,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,33232,329,388.16,3
+2025-05-06,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,37071,367,432.81,4
+2025-05-06,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,40909,405,477.47,4
+2025-05-06,ms_334455,ms-0005,Kids and Family Winback South Microsoft,44747,443,522.12,5
+2025-05-06,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,48586,481,566.78,5
+2025-05-06,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,52424,519,611.43,5
+2025-05-06,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,56263,557,656.09,6
+2025-05-07,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,86768,859,995.06,9
+2025-05-07,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,34040,337,390.42,3
+2025-05-07,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,37980,376,435.34,4
+2025-05-07,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,41919,415,480.25,4
+2025-05-07,ms_334455,ms-0005,Kids and Family Winback South Microsoft,45758,453,525.17,5
+2025-05-07,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,49697,492,570.08,5
+2025-05-07,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,53636,531,615.0,5
+2025-05-07,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,57576,570,659.92,6
+2025-05-08,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,88788,879,1000.83,9
+2025-05-08,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,34848,345,392.69,3
+2025-05-08,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,38889,385,437.86,4
+2025-05-08,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,42828,424,483.04,4
+2025-05-08,ms_334455,ms-0005,Kids and Family Winback South Microsoft,46869,464,528.22,5
+2025-05-08,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,50909,504,573.39,5
+2025-05-08,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,54848,543,618.57,5
+2025-05-08,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,58889,583,663.75,6
+2025-05-09,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,89798,889,1127.4,11
+2025-05-09,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,35253,349,442.35,4
+2025-05-09,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,39293,389,493.24,5
+2025-05-09,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,43333,429,544.13,5
+2025-05-09,ms_334455,ms-0005,Kids and Family Winback South Microsoft,47374,469,595.02,6
+2025-05-09,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,51414,509,645.91,6
+2025-05-09,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,55455,549,696.79,7
+2025-05-09,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,59495,589,747.68,7
+2025-05-10,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,92020,911,1133.86,11
+2025-05-10,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,36061,357,444.88,4
+2025-05-10,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,40303,399,496.07,5
+2025-05-10,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,44444,440,547.25,5
+2025-05-10,ms_334455,ms-0005,Kids and Family Winback South Microsoft,48586,481,598.43,6
+2025-05-10,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,52727,522,649.61,6
+2025-05-10,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,56869,563,700.79,7
+2025-05-10,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,61010,604,751.97,7
+2025-05-11,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,94242,933,1140.33,11
+2025-05-11,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,36970,366,447.42,4
+2025-05-11,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,41212,408,498.9,5
+2025-05-11,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,45455,450,550.37,5
+2025-05-11,ms_334455,ms-0005,Kids and Family Winback South Microsoft,49798,493,601.84,6
+2025-05-11,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,54040,535,653.32,6
+2025-05-11,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,58283,577,704.79,6
+2025-05-11,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,62525,619,756.26,7
+2025-05-12,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,86162,853,1023.93,9
+2025-05-12,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,33838,335,401.75,4
+2025-05-12,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,37677,373,447.97,4
+2025-05-12,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,41616,412,494.19,4
+2025-05-12,ms_334455,ms-0005,Kids and Family Winback South Microsoft,45455,450,540.41,5
+2025-05-12,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,49394,489,586.63,5
+2025-05-12,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,53232,527,632.84,6
+2025-05-12,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,57172,566,679.06,6
+2025-05-13,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,112929,1118,1318.02,12
+2025-05-13,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,44343,439,517.14,5
+2025-05-13,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,49394,489,576.63,5
+2025-05-13,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,54545,540,636.13,6
+2025-05-13,ms_334455,ms-0005,Kids and Family Winback South Microsoft,59596,590,695.62,6
+2025-05-13,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,64747,641,755.11,7
+2025-05-13,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,69798,691,814.61,7
+2025-05-13,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,74949,742,874.1,8
+2025-05-14,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,90303,894,1035.48,9
+2025-05-14,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,35455,351,406.28,4
+2025-05-14,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,39495,391,453.02,4
+2025-05-14,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,43535,431,499.76,4
+2025-05-14,ms_334455,ms-0005,Kids and Family Winback South Microsoft,47677,472,546.5,5
+2025-05-14,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,51717,512,593.24,5
+2025-05-14,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,55859,553,639.98,6
+2025-05-14,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,59899,593,686.72,6
+2025-05-15,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,92424,915,1041.25,9
+2025-05-15,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,36263,359,408.55,4
+2025-05-15,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,40404,400,455.55,4
+2025-05-15,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,44545,441,502.55,4
+2025-05-15,ms_334455,ms-0005,Kids and Family Winback South Microsoft,48788,483,549.55,5
+2025-05-15,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,52929,524,596.55,5
+2025-05-15,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,57071,565,643.55,6
+2025-05-15,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,61313,607,690.55,6
+2025-05-16,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,93333,924,1172.67,11
+2025-05-16,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,36667,363,460.11,4
+2025-05-16,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,40808,404,513.04,5
+2025-05-16,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,45051,446,565.97,5
+2025-05-16,ms_334455,ms-0005,Kids and Family Winback South Microsoft,49293,488,618.91,6
+2025-05-16,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,53535,530,671.84,6
+2025-05-16,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,57677,571,724.77,7
+2025-05-16,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,61919,613,777.71,7
+2025-05-17,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,95657,947,1179.13,11
+2025-05-17,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,37576,372,462.65,4
+2025-05-17,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,41818,414,515.87,5
+2025-05-17,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,46162,457,569.1,5
+2025-05-17,ms_334455,ms-0005,Kids and Family Winback South Microsoft,50505,500,622.32,6
+2025-05-17,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,54848,543,675.55,6
+2025-05-17,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,59091,585,728.77,7
+2025-05-17,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,63434,628,781.99,7
+2025-05-18,ms_334455,ms-0001,Mission: Impossible - Dead Reckoning,97980,970,1185.6,11
+2025-05-18,ms_334455,ms-0002,Drama Collection Prospecting West Microsoft,38485,381,465.18,4
+2025-05-18,ms_334455,ms-0003,Comedy Classics Retargeting East Microsoft,42828,424,518.7,5
+2025-05-18,ms_334455,ms-0004,Sports Weekend Trial Midwest Microsoft,47273,468,572.22,5
+2025-05-18,ms_334455,ms-0005,Kids and Family Winback South Microsoft,51717,512,625.73,6
+2025-05-18,ms_334455,ms-0006,Reality Launch Awareness US Microsoft,56162,556,679.25,6
+2025-05-18,ms_334455,ms-0007,Sci-Fi Vault Prospecting West Microsoft,60606,600,732.77,7
+2025-05-18,ms_334455,ms-0008,Movie Night Retargeting East Microsoft,64949,643,786.28,7
