@@ -1,52 +1,62 @@
 # Airflow Marketing Data Ops
 
-A GitHub-ready Airflow demo for a marketing data operations workflow:
+I built this as a small but realistic marketing data ops project: an Airflow-style pipeline, a normalized paid media table, and a Streamlit dashboard that uses the same real Kaggle Global Ads Performance dataset as my React dashboard.
 
-1. Ingest raw paid media CSV extracts.
-2. Validate schema, non-negative metrics, and freshness.
-3. Transform Google Ads, Meta Ads, TikTok Ads, YouTube, Microsoft Ads, and other paid media extracts into a unified daily campaign table.
-4. Write a Markdown incident report when a task fails.
+The main idea is simple: take campaign data from paid media platforms, clean it into one analytics-ready table, and make the dashboard easy to use for quick performance checks.
 
-The project uses only local files and documented sample extracts in `data/raw/`.
+## What Is Inside
 
-The sample extracts are modeled after common paid media schemas and public campaign-performance datasets, including Google's public analytics sample and public Kaggle-style ad performance datasets. Real platform exports normally require account credentials, so this project keeps the operational workflow runnable offline with a deterministic 31-day portfolio dataset: 3,007 raw rows, 97 campaigns, and 6 paid media sources.
+- Airflow DAG for a daily marketing campaign workflow
+- Reusable Python pipeline code for validation and normalization
+- Streamlit dashboard for campaign performance analysis
+- Real Kaggle-backed dashboard data for Google Ads, Meta, and TikTok
+- Local portfolio sample data for the Airflow pipeline demo
+- Tests for the pipeline and dashboard data loading
 
-The repo also includes `data/public/public_facebook_ads_sample.csv`, a 150-row normalized public Facebook ads conversion sample for reviewers who want to inspect a real campaign dataset alongside the runnable local extracts.
+## Dashboard
+
+The Streamlit dashboard defaults to:
+
+```text
+data/public/global_ads_performance_daily.csv
+```
+
+That file is normalized from:
+
+```text
+data/public/raw_global_ads_performance_dataset.csv
+```
+
+It matches the Kaggle dataset used in my React dashboard branch, so the headline stats line up across both apps:
+
+- Total spend
+- Conversions
+- CPA
+- CTR
+- CPC
+- Revenue
+- ROAS
+
+The dashboard also includes filters for date range, platform, campaign, source/medium, country, and industry.
 
 ## Project Layout
 
 ```text
 airflow-marketing-data-ops/
-  dags/marketing_campaign_daily.py        # Airflow DAG
-  marketing_data_ops/                     # Reusable pipeline package
-  data/raw/                               # Sample paid media source extracts
-  dashboard/app.py                        # Streamlit dashboard for the unified CSV
-  config/pipeline.yml                     # Freshness, quality, and output settings
-  scripts/generate_sample_data.py         # Deterministic sample-data generator
-  scripts/run_pipeline.py                 # Local runner without Airflow
-  tests/test_pipeline.py                  # Unit/integration tests
-  docker-compose.yml                      # Lightweight Airflow standalone option
+  dags/                         Airflow DAG
+  marketing_data_ops/           Pipeline package
+  data/raw/                     Portfolio sample extracts
+  data/public/                  Kaggle dashboard dataset
+  dashboard/app.py              Streamlit dashboard
+  config/pipeline.yml           Validation and freshness rules
+  scripts/                      Local pipeline helpers
+  tests/                        Pipeline and dashboard tests
+  docker-compose.yml            Local Airflow option
 ```
 
-## Data Model
+## Run It Locally
 
-The output table is written to `output/unified_campaign_daily.csv`.
-
-| Column | Description |
-| --- | --- |
-| `date` | Campaign performance date. |
-| `source` | Paid media platform, such as `google_ads` or `meta_ads`. |
-| `account_id` | Platform account ID. |
-| `campaign_id` | Platform campaign ID. |
-| `campaign_name` | Human-readable campaign name. |
-| `impressions`, `clicks`, `spend`, `conversions` | Daily delivery and conversion metrics. |
-| `ctr`, `cpc`, `cpa` | Derived performance metrics. |
-
-Google Ads and YouTube sample spend is stored as `spend_micros` and normalized to currency units. Meta Ads sample purchases are stored as `actions_purchase` and normalized to `conversions`. TikTok sample dates use `stat_time_day` and are normalized to the same daily reporting grain.
-
-## Quick Start
-
-Create a virtual environment and install dependencies:
+Install dependencies:
 
 ```bash
 python -m venv .venv
@@ -54,16 +64,10 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Run the pipeline locally:
+Run the local pipeline sample:
 
 ```bash
 python scripts/run_pipeline.py
-```
-
-Regenerate the included portfolio-scale raw extracts:
-
-```bash
-python scripts/generate_sample_data.py
 ```
 
 Open the dashboard:
@@ -72,68 +76,43 @@ Open the dashboard:
 streamlit run dashboard/app.py
 ```
 
-The dashboard reads `output/unified_campaign_daily.csv`. If that file is missing, it regenerates it from the included source extracts under `data/raw/`. You can also upload another CSV with the same unified schema from the sidebar.
-
 Run tests:
 
 ```bash
 pytest
 ```
 
-On Windows, run Airflow itself through Docker or WSL2. Apache Airflow is designed for POSIX-style environments, and native Windows DAG execution can hit POSIX-only imports such as `fcntl`.
+## Airflow Demo
 
-## Run With Airflow
-
-The fastest demo path is Airflow standalone through Docker Compose:
+To run the Airflow version locally:
 
 ```bash
 docker compose up
 ```
 
-Open `http://localhost:8080`, find the `marketing_campaign_daily` DAG, and trigger it manually. Airflow standalone prints the generated admin credentials in the container logs.
+Then open `http://localhost:8080` and trigger the `marketing_campaign_daily` DAG.
 
-The DAG reads local files from `data/raw/` and writes the unified table to `output/unified_campaign_daily.csv`.
+The DAG reads sample extracts from `data/raw/`, validates them, and writes the unified output to:
 
-To run a non-interactive DAG test:
-
-```bash
-docker compose run --rm airflow bash -c "airflow db migrate && airflow dags test marketing_campaign_daily 2025-05-18"
+```text
+output/unified_campaign_daily.csv
 ```
 
-## Validation Rules
+## Data Model
 
-Rules live in `config/pipeline.yml`.
+The dashboard and pipeline use a daily campaign grain.
 
-- Required columns are checked per source.
-- Extracts must be non-empty.
-- Numeric metrics listed under `quality.non_negative_metrics` cannot be negative.
-- Latest source partition must be within `freshness.max_lag_days` of `freshness.reference_date`.
+| Column | Meaning |
+| --- | --- |
+| `date` | Campaign performance date |
+| `source` / `source_label` | Platform, like Google Ads, Meta, or TikTok |
+| `campaign_id` / `campaign_name` | Campaign identifiers |
+| `segment` | Country or reporting segment |
+| `impressions`, `clicks`, `spend`, `conversions`, `revenue` | Core performance metrics |
+| `ctr`, `cpc`, `cpa`, `roas` | Derived performance metrics |
 
-For a live deployment, replace `freshness.reference_date` with the Airflow logical date or a runtime parameter. It is pinned here so tests and portfolio demos are deterministic.
+## Why I Made This
 
-## Incident Runbook
+I wanted this repo to feel like the kind of marketing analytics work I would actually hand to a team: clear data contracts, simple validation, useful failure notes, and a dashboard that tells the same story as the underlying dataset.
 
-On failure, the DAG callback writes a Markdown incident report to `output/incidents/`.
-
-Local runner failures also create an incident report with:
-
-- failing task name,
-- error type and message,
-- UTC detection timestamp,
-- immediate triage checklist,
-- traceback for debugging.
-
-Common fixes:
-
-- Missing column: update the extract or `config/pipeline.yml` if the upstream schema intentionally changed.
-- Negative metric: inspect upstream platform adjustments, refunds, or malformed input.
-- Stale extract: confirm the file landed in `data/raw/<source>/` or adjust the freshness window for backfills.
-
-## Portfolio Notes
-
-This repo is intentionally small but shaped like production data ops work:
-
-- Airflow orchestration is separated from business logic.
-- Data quality checks fail early before transformation.
-- The transform produces a stable analytics table contract.
-- Incident reporting creates an artifact that an analyst or on-call owner can use immediately.
+It is intentionally compact, but the pieces are separated the way I would separate them in a real workflow: orchestration, transformation, validation, dashboarding, and documentation.

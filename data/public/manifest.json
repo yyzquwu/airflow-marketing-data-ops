@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-05-06T13:25:02.799Z",
+  "datasets": [
+    {
+      "id": "global_ads_performance",
+      "label": "Kaggle global ads performance",
+      "source": "Kaggle Global Ads Performance: Google, Meta, TikTok",
+      "csv": "/data/global_ads_performance_daily.csv",
+      "json": "/data/global_ads_performance_daily.json",
+      "raw": "/data/raw_global_ads_performance_dataset.csv",
+      "rows": 1800
+    }
+  ]
+}
